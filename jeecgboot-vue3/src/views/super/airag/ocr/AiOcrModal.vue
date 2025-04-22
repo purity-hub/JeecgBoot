@@ -9,6 +9,7 @@
   const emit = defineEmits(['success', 'register']);
   const title = ref<string>('');
   const isUpdate = ref<boolean>(false);
+  const isParse = ref<boolean>(false);
   // 注册 form
   const [registerForm, { resetFields, setFieldsValue, validate, updateSchema, setProps }] = useForm({
     schemas: formSchemas,
@@ -18,6 +19,7 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false, showCancelBtn: !!data?.showFooter, showOkBtn: !!data?.showFooter });
     isUpdate.value = unref(data.isUpdate);
+    isParse.value = unref(data.isParse);
     title.value = unref(data.title);
     await resetFields();
     await setFieldsValue({ ...data.record });
@@ -27,6 +29,9 @@
 
   async function onSubmit() {
     try {
+      if (isParse) {
+        return;
+      }
       const values = await validate();
       setModalProps({ confirmLoading: true });
       // 提交表单

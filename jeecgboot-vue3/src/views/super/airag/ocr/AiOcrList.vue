@@ -93,7 +93,13 @@
   }
 
   function handleParse(record) {
-    console.log('解析:', record);
+    openModal(true, {
+      title: '解析',
+      isUpdate: false,
+      isParse: true,
+      record: record,
+      showFooter: true,
+    });
   }
 
   function handleEdit(record) {
