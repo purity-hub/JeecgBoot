@@ -1,26 +1,36 @@
 <template>
   <!--定义表格-->
   <BasicTable @register="registerTable">
+    <template #tableTitle>
+      <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"> 新增</a-button>
+    </template>
     <!--操作栏-->
     <template #action="{ record }">
       <TableAction :actions="getTableAction(record)" />
     </template>
   </BasicTable>
-  <AiOcrModal @register="registerModal" />
+  <AiOcrModal @register="registerModal" @success="reload" />
 </template>
 
 <script lang="ts" name="basic-table-demo" setup>
   import { ActionItem, BasicColumn, BasicTable, TableAction } from '/@/components/Table';
   import { useListPage } from '/@/hooks/system/useListPage';
   import { useModal } from '@/components/Modal';
-  import Modal from '@/components/Modal/src/components/Modal';
   import AiOcrModal from '@/views/super/airag/ocr/AiOcrModal.vue';
+  import { render } from '@/utils/common/renderUtils';
+  import { deleteOcr, getOcrList } from '@/views/super/airag/ocr/ocr.api';
   //定义表格列字段
   const columns: BasicColumn[] = [
     {
       title: '标题(文件名)',
       dataIndex: 'fileName',
       key: 'fileName',
+    },
+    {
+      title: '图片',
+      dataIndex: 'imagePath',
+      key: 'imagePath',
+      customRender: render.renderImage,
     },
     {
       title: '识别结果',
@@ -38,20 +48,7 @@
     designScope: 'basic-table-demo',
     tableProps: {
       title: 'OCR识别列表',
-      dataSource: [
-        {
-          key: '1',
-          fileName: 'example1.jpg',
-          ocrResult: '识别结果1',
-          uploadTime: '2023-10-01 12:00:00',
-        },
-        {
-          key: '2',
-          fileName: 'example2.jpg',
-          ocrResult: '识别结果2',
-          uploadTime: '2023-10-02 12:00:00',
-        },
-      ],
+      api: getOcrList,
       columns: columns,
       size: 'small',
       actionColumn: {
@@ -86,6 +83,15 @@
     ];
   }
 
+  function handleCreate() {
+    openModal(true, {
+      title: '新增消息模板',
+      isUpdate: false,
+      record: {},
+      showFooter: true,
+    });
+  }
+
   function handleParse(record) {
     console.log('解析:', record);
   }
@@ -101,9 +107,11 @@
 
   function handleDelete(record) {
     setLoading(true);
-    console.log('删除:', record);
-    setTimeout(() => {
+    deleteOcr({ id: record.id }, () => {
       setLoading(false);
-    }, 1000);
+    }).finally(() => {
+      setLoading(false);
+      reload();
+    });
   }
 </script>

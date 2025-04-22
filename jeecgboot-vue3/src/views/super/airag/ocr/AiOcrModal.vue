@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { saveOrUpdate } from '@/views/system/message/template/template.api';
+  import { saveOrUpdateOcr } from '@/views/super/airag/ocr/ocr.api';
   import { formSchemas } from './ocr.data';
   import { ref, unref } from 'vue';
 
@@ -10,9 +10,7 @@
   const title = ref<string>('');
   const isUpdate = ref<boolean>(false);
   // 注册 form
-  //update-begin---author:wangshuai ---date:20221123  for：[VUEN-2807]消息模板加一个查看功能------------
   const [registerForm, { resetFields, setFieldsValue, validate, updateSchema, setProps }] = useForm({
-    //update-end---author:wangshuai ---date:20221123  for：[VUEN-2807]消息模板加一个查看功能--------------z
     schemas: formSchemas,
     showActionButtonGroup: false,
   });
@@ -32,7 +30,7 @@
       const values = await validate();
       setModalProps({ confirmLoading: true });
       // 提交表单
-      await saveOrUpdate(values, isUpdate);
+      await saveOrUpdateOcr(values, isUpdate);
       //关闭弹窗
       closeModal();
       //刷新列表
