@@ -6,15 +6,19 @@
       <TableAction :actions="getTableAction(record)" />
     </template>
   </BasicTable>
+  <AiOcrModal @register="registerModal" />
 </template>
 
 <script lang="ts" name="basic-table-demo" setup>
   import { ActionItem, BasicColumn, BasicTable, TableAction } from '/@/components/Table';
   import { useListPage } from '/@/hooks/system/useListPage';
+  import { useModal } from '@/components/Modal';
+  import Modal from '@/components/Modal/src/components/Modal';
+  import AiOcrModal from '@/views/super/airag/ocr/AiOcrModal.vue';
   //定义表格列字段
   const columns: BasicColumn[] = [
     {
-      title: '文件名',
+      title: '标题(文件名)',
       dataIndex: 'fileName',
       key: 'fileName',
     },
@@ -56,7 +60,8 @@
     },
   });
   // BasicTable绑定注册
-  const [registerTable] = tableContext;
+  const [registerTable, { reload, setLoading }, { rowSelection, selectedRowKeys, selectedRows }] = tableContext;
+  const [registerModal, { openModal }] = useModal();
   /**
    * 操作栏
    */
@@ -72,7 +77,11 @@
       },
       {
         label: '删除',
-        onClick: handleDelete.bind(null, record),
+        color: 'error',
+        popConfirm: {
+          title: '确认要删除吗？',
+          confirm: handleDelete.bind(null, record),
+        },
       },
     ];
   }
@@ -82,11 +91,19 @@
   }
 
   function handleEdit(record) {
-    console.log('编辑:', record);
+    openModal(true, {
+      title: '修改消息模板',
+      isUpdate: true,
+      record: record,
+      showFooter: true,
+    });
   }
 
   function handleDelete(record) {
+    setLoading(true);
     console.log('删除:', record);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }
 </script>
-
