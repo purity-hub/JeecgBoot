@@ -573,7 +573,12 @@ AI写文章
 ![](https://oscimg.oschina.net/oscnet/up-4868615395272d3206dbb960ade02dbc291.png)
 
 
-
+##### 推送代码
+```bash
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+git config --global http.proxy http://127.0.0.1:7890
+```
 
 
 
