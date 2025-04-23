@@ -5,11 +5,20 @@
   import { formSchemas } from './ocr.data';
   import { ref, unref } from 'vue';
 
+  // 引入
+  import { createWorker } from 'tesseract.js';
+  import { useGlobSetting } from '@/hooks/setting';
   // 声明 emits
   const emit = defineEmits(['success', 'register']);
   const title = ref<string>('');
   const isUpdate = ref<boolean>(false);
   const isParse = ref<boolean>(false);
+
+  // 解析的图片路径
+  const imagePath = ref<string>('');
+  // 解析的结果
+  const parseResult = ref<string>('');
+
   // 注册 form
   const [registerForm, { resetFields, setFieldsValue, validate, updateSchema, setProps }] = useForm({
     schemas: formSchemas,
@@ -21,15 +30,28 @@
     isUpdate.value = unref(data.isUpdate);
     isParse.value = unref(data.isParse);
     title.value = unref(data.title);
+
+    // 开启解析时，设置图片路径和结果
+    if (unref(data.isParse)) {
+      imagePath.value = unref(data.record.imagePath);
+    }
     await resetFields();
     await setFieldsValue({ ...data.record });
     // 隐藏底部时禁用整个表单
-    setProps({ disabled: !data?.showFooter });
+    await setProps({ disabled: !data?.showFooter });
   });
+
+  const globSetting = useGlobSetting();
+  const baseApiUrl = globSetting.domainUrl;
 
   async function onSubmit() {
     try {
-      if (isParse) {
+      if (isParse.value) {
+        const worker = await createWorker('chi_sim');
+        console.log(baseApiUrl + '/sys/common/static/' + imagePath.value);
+        const ret = await worker.recognize(baseApiUrl + '/sys/common/static/' + imagePath.value);
+        console.log(ret.data.text);
+        await worker.terminate();
         return;
       }
       const values = await validate();
