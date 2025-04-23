@@ -51,6 +51,8 @@
   async function onSubmit() {
     try {
       if (isParse.value) {
+        // 选择语言
+        console.log(formSchemas);
         const worker = await createWorker('chi_sim');
         console.log(baseApiUrl + '/sys/common/static/' + imagePath.value);
         const ret = await worker.recognize(baseApiUrl + '/sys/common/static/' + imagePath.value);

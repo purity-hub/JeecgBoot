@@ -29,21 +29,25 @@ export const formSchemas: FormSchema[] = [
     label: '语言',
     field: 'language',
     component: 'Select',
-    componentProps: {
-      options: [
-        {
-          label: '中文',
-          value: 'chi_sim',
-        },
-        {
-          label: '英文',
-          value: 'eng',
-        },
-        {
-          label: '日文',
-          value: 'jpn',
-        },
-      ],
+    componentProps: ({ formModel, formActionType }) => {
+      return {
+        options: [
+          {
+            label: '中文',
+            value: 'chi_sim',
+          },
+          {
+            label: '英文',
+            value: 'eng',
+          },
+          {
+            label: '日文',
+            value: 'jpn',
+          },
+        ],
+        placeholder: '请选择语言',
+        onChange: (e: any) => {},
+      };
     },
     show: true,
   },
