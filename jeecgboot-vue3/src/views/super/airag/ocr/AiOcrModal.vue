@@ -121,6 +121,7 @@
         console.log(baseApiUrl + '/sys/common/static/' + imagePath.value);
         const ret = await worker.recognize(baseApiUrl + '/sys/common/static/' + imagePath.value);
         console.log(ret.data.text);
+        await setFieldsValue({ ocrResult: ret.data.text });
         await worker.terminate();
         return;
       }
