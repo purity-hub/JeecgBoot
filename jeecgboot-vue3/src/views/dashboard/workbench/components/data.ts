@@ -114,7 +114,7 @@ export const groupItems: GroupItem[] = [
     date: '2021-04-01',
   },
   {
-    title: 'Vue',
+    title: 'LeetCode',
     icon: 'ion:logo-vue',
     color: '#3fb27f',
     desc: '现在的你决定将来的你。',
@@ -122,7 +122,7 @@ export const groupItems: GroupItem[] = [
     date: '2021-04-01',
   },
   {
-    title: 'Html5',
+    title: '八股文',
     icon: 'ion:logo-html5',
     color: '#e18525',
     desc: '没有什么才能比努力更重要。',
@@ -130,7 +130,7 @@ export const groupItems: GroupItem[] = [
     date: '2021-04-01',
   },
   {
-    title: 'Angular',
+    title: '文件管理',
     icon: 'ion:logo-angular',
     color: '#bf0c2c',
     desc: '热情和欲望可以突破一切难关。',
