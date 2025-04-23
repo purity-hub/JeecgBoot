@@ -31,6 +31,10 @@
     isParse.value = unref(data.isParse);
     title.value = unref(data.title);
 
+    if (isUpdate.value) {
+      formSchemas[3].show = false;
+    }
+
     // 开启解析时，设置图片路径和结果
     if (unref(data.isParse)) {
       imagePath.value = unref(data.record.imagePath);
