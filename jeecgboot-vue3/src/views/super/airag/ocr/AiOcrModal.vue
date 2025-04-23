@@ -141,7 +141,7 @@
 </script>
 
 <template>
-  <BasicModal @register="registerModal" :title="title" :width="800" v-bind="$attrs" @ok="onSubmit">
+  <BasicModal @register="registerModal" :title="title" :width="800" v-bind="$attrs" @ok="onSubmit" :okText="isParse ? '解析' : '提交'">
     <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
