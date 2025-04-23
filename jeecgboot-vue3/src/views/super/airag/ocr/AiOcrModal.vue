@@ -33,6 +33,9 @@
         listType: 'picture-card',
         bizPath: 'ocr',
         disabled: false,
+        onChange: (e: string) => {
+          imagePath.value = e;
+        },
       },
     },
     {
