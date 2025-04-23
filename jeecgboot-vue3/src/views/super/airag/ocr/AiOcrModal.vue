@@ -123,6 +123,7 @@
         console.log(ret.data.text);
         await setFieldsValue({ ocrResult: ret.data.text });
         await worker.terminate();
+        isParse.value = false;
         return;
       }
       const values = await validate();
