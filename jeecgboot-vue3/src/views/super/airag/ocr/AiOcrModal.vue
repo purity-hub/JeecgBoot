@@ -1,13 +1,75 @@
 <script setup lang="ts">
-  import { BasicForm, useForm } from '@/components/Form';
+  import { BasicForm, FormSchema, useForm } from '@/components/Form';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { saveOrUpdateOcr } from '@/views/super/airag/ocr/ocr.api';
-  import { formSchemas } from './ocr.data';
   import { ref, unref } from 'vue';
 
   // 引入
   import { createWorker } from 'tesseract.js';
   import { useGlobSetting } from '@/hooks/setting';
+
+  const language = ref<string>('chi_sim');
+
+  const formSchemas: FormSchema[] = [
+    {
+      label: '',
+      field: 'id',
+      component: 'Input',
+      show: false,
+    },
+    {
+      label: '标题(文件名)',
+      field: 'fileName',
+      component: 'Input',
+    },
+    {
+      label: '图片',
+      field: 'imagePath',
+      component: 'JImageUpload',
+      componentProps: {
+        text: '图片上传',
+        fileMax: 1,
+        //支持两种基本样式picture和picture-card
+        listType: 'picture-card',
+        bizPath: 'ocr',
+        disabled: false,
+      },
+    },
+    {
+      label: '语言',
+      field: 'language',
+      component: 'Select',
+      componentProps: ({ formModel, formActionType }) => {
+        return {
+          options: [
+            {
+              label: '中文',
+              value: 'chi_sim',
+            },
+            {
+              label: '英文',
+              value: 'eng',
+            },
+            {
+              label: '日文',
+              value: 'jpn',
+            },
+          ],
+          placeholder: '请选择语言',
+          onChange: (e: any) => {
+            language.value = e;
+          },
+        };
+      },
+      show: true,
+    },
+    {
+      label: '识别结果',
+      field: 'ocrResult',
+      component: 'InputTextArea',
+    },
+  ];
+
   // 声明 emits
   const emit = defineEmits(['success', 'register']);
   const title = ref<string>('');
@@ -52,8 +114,7 @@
     try {
       if (isParse.value) {
         // 选择语言
-        console.log(formSchemas);
-        const worker = await createWorker('chi_sim');
+        const worker = await createWorker(language.value);
         console.log(baseApiUrl + '/sys/common/static/' + imagePath.value);
         const ret = await worker.recognize(baseApiUrl + '/sys/common/static/' + imagePath.value);
         console.log(ret.data.text);
