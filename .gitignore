@@ -13,3 +13,6 @@ os_del.cmd
 os_del_doc.cmd
 .svn
 derby.log
+
+/node_modules/
+/node_modules/.pnpm/
