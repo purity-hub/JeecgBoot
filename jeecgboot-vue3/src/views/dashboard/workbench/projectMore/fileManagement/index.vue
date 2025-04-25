@@ -40,6 +40,10 @@
             <!-- Use iframe for .pdf file preview -->
             <iframe :src="selectedFileContent" width="100%" height="100%" style="border: none;"></iframe>
           </template>
+          <template v-else-if="isExcelFile">
+            <!-- Use VueOfficeExcel for .xlsx file preview -->
+            <VueOfficeExcel :src="selectedFileContent" />
+          </template>
           <template v-else>
             <pre class="file-content">{{ selectedFileContent }}</pre>
           </template>
@@ -54,6 +58,7 @@
   import { ref } from 'vue';
   import { FolderOutlined, FileOutlined } from '@ant-design/icons-vue';
   import VueOfficeDocx from '@vue-office/docx'; // Import VueOfficeDocx
+  import VueOfficeExcel from '@vue-office/excel'; // Import VueOfficeExcel
 
   console.log('index.vue');
 
@@ -66,6 +71,7 @@
   const isImageFile = ref(false);
   const isDocxFile = ref(false); // Add state for docx file detection
   const isPdfFile = ref(false); // Add state for pdf file detection
+  const isExcelFile = ref(false); // Add state for excel file detection
   const isLoading = ref(false); // Add loading state
 
   // 转换文件结构为树形数据
@@ -171,21 +177,31 @@
         isImageFile.value = true;
         isDocxFile.value = false;
         isPdfFile.value = false;
+        isExcelFile.value = false;
         selectedFileContent.value = URL.createObjectURL(file);
       } else if (file.name.endsWith('.docx')) {
         isDocxFile.value = true;
         isImageFile.value = false;
         isPdfFile.value = false;
+        isExcelFile.value = false;
         selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeDocx
       } else if (file.name.endsWith('.pdf')) {
         isPdfFile.value = true;
         isImageFile.value = false;
         isDocxFile.value = false;
+        isExcelFile.value = false;
         selectedFileContent.value = URL.createObjectURL(file); // Use URL for PDF
+      } else if (file.name.endsWith('.xlsx')) {
+        isExcelFile.value = true;
+        isImageFile.value = false;
+        isDocxFile.value = false;
+        isPdfFile.value = false;
+        selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeExcel
       } else {
         isImageFile.value = false;
         isDocxFile.value = false;
         isPdfFile.value = false;
+        isExcelFile.value = false;
         selectedFileContent.value = await file.text();
       }
     }
