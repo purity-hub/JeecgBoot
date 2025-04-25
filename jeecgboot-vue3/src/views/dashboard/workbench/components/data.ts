@@ -144,7 +144,7 @@ export const groupItems: GroupItem[] = [
     url: '/dashboard/workbench/projectMore/fileManagement',
   },
   {
-    title: 'React',
+    title: 'python在线绘图',
     icon: 'bx:bxl-react',
     color: '#00d8ff',
     desc: '健康的身体是实目标的基石。',
