@@ -152,7 +152,7 @@ export const groupItems: GroupItem[] = [
     date: '2021-04-01',
   },
   {
-    title: 'Js',
+    title: '工作',
     icon: 'ion:logo-javascript',
     color: '#4daf1bc9',
     desc: '路是走出来的，而不是空想出来的。',
