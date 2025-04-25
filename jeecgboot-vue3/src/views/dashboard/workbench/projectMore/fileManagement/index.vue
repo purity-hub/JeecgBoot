@@ -36,6 +36,10 @@
             <!-- Use VueOfficeDocx for .docx file preview -->
             <VueOfficeDocx :src="selectedFileContent" />
           </template>
+          <template v-else-if="isPdfFile">
+            <!-- Use iframe for .pdf file preview -->
+            <iframe :src="selectedFileContent" width="100%" height="100%" style="border: none;"></iframe>
+          </template>
           <template v-else>
             <pre class="file-content">{{ selectedFileContent }}</pre>
           </template>
@@ -61,6 +65,7 @@
   const selectedFileName = ref('');
   const isImageFile = ref(false);
   const isDocxFile = ref(false); // Add state for docx file detection
+  const isPdfFile = ref(false); // Add state for pdf file detection
   const isLoading = ref(false); // Add loading state
 
   // 转换文件结构为树形数据
@@ -165,14 +170,22 @@
       if (fileType.startsWith('image/')) {
         isImageFile.value = true;
         isDocxFile.value = false;
+        isPdfFile.value = false;
         selectedFileContent.value = URL.createObjectURL(file);
       } else if (file.name.endsWith('.docx')) {
         isDocxFile.value = true;
         isImageFile.value = false;
+        isPdfFile.value = false;
         selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeDocx
+      } else if (file.name.endsWith('.pdf')) {
+        isPdfFile.value = true;
+        isImageFile.value = false;
+        isDocxFile.value = false;
+        selectedFileContent.value = URL.createObjectURL(file); // Use URL for PDF
       } else {
         isImageFile.value = false;
         isDocxFile.value = false;
+        isPdfFile.value = false;
         selectedFileContent.value = await file.text();
       }
     }

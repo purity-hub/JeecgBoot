@@ -41,6 +41,12 @@ importers:
       '@vant/area-data':
         specifier: ^1.5.2
         version: 1.5.2
+      '@vue-office/docx':
+        specifier: ^1.6.3
+        version: 1.6.3(vue-demi@0.14.10(vue@3.5.13(typescript@4.9.5)))(vue@3.5.13(typescript@4.9.5))
+      '@vue-office/excel':
+        specifier: ^1.7.14
+        version: 1.7.14(vue-demi@0.14.10(vue@3.5.13(typescript@4.9.5)))(vue@3.5.13(typescript@4.9.5))
       '@vue/shared':
         specifier: ^3.5.13
         version: 3.5.13
@@ -161,6 +167,9 @@ importers:
       vue-cropperjs:
         specifier: ^5.0.0
         version: 5.0.0(vue@3.5.13(typescript@4.9.5))
+      vue-demi:
+        specifier: ^0.14.10
+        version: 0.14.10(vue@3.5.13(typescript@4.9.5))
       vue-i18n:
         specifier: ^9.14.2
         version: 9.14.4(vue@3.5.13(typescript@4.9.5))
@@ -1684,6 +1693,26 @@ packages:
 
   '@volar/typescript@1.11.1':
     resolution: {integrity: sha512-iU+t2mas/4lYierSnoFOeRFQUhAEMgsFuQxoxvwn5EdQopw43j+J27a4lt9LMInx1gLJBC6qL14WYGlgymaSMQ==}
+
+  '@vue-office/docx@1.6.3':
+    resolution: {integrity: sha512-Cs+3CAaRBOWOiW4XAhTwwxJ0dy8cPIf6DqfNvYcD3YACiLwO4kuawLF2IAXxyijhbuOeoFsfvoVbOc16A/4bZA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.7.1
+      vue: ^2.0.0 || >=3.0.0
+      vue-demi: ^0.14.6
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
+  '@vue-office/excel@1.7.14':
+    resolution: {integrity: sha512-pVUgt+emDQUnW7q22CfnQ+jl43mM/7IFwYzOg7lwOwPEbiVB4K4qEQf+y/bc4xGXz75w1/e3Kz3G6wAafmFBFg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.7.1
+      vue: ^2.0.0 || >=3.0.0
+      vue-demi: ^0.14.6
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
 
   '@vue/babel-helper-vue-transform-on@1.4.0':
     resolution: {integrity: sha512-mCokbouEQ/ocRce/FpKCRItGo+013tHg7tixg3DUNS+6bmIchPt66012kBMm476vyEIJPafrvOf4E5OYj3shSw==}
@@ -7839,6 +7868,16 @@ snapshots:
     dependencies:
       '@volar/language-core': 1.11.1
       path-browserify: 1.0.1
+
+  '@vue-office/docx@1.6.3(vue-demi@0.14.10(vue@3.5.13(typescript@4.9.5)))(vue@3.5.13(typescript@4.9.5))':
+    dependencies:
+      vue: 3.5.13(typescript@4.9.5)
+      vue-demi: 0.14.10(vue@3.5.13(typescript@4.9.5))
+
+  '@vue-office/excel@1.7.14(vue-demi@0.14.10(vue@3.5.13(typescript@4.9.5)))(vue@3.5.13(typescript@4.9.5))':
+    dependencies:
+      vue: 3.5.13(typescript@4.9.5)
+      vue-demi: 0.14.10(vue@3.5.13(typescript@4.9.5))
 
   '@vue/babel-helper-vue-transform-on@1.4.0': {}
 
