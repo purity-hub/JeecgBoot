@@ -3,7 +3,7 @@
     <!-- 侧边栏 -->
     <a-layout-sider theme="light" width="280" class="sider">
       <div class="toolbar">
-        <a-button type="primary" @click="selectDirectory">打开文件夹</a-button>
+        <a-button type="primary" :loading="isLoading" @click="selectDirectory">打开文件夹</a-button>
       </div>
       <a-tree
         v-if="fileTree.length"
@@ -28,7 +28,17 @@
         <div class="preview-toolbar">
           <span class="file-name">{{ selectedFileName }}</span>
         </div>
-        <pre class="file-content">{{ selectedFileContent }}</pre>
+        <div class="preview-content">
+          <template v-if="isImageFile">
+            <img :src="selectedFileContent" alt="Image Preview" class="image-preview" />
+          </template>
+          <template v-else-if="isDocxFile">
+            <VueOfficeDocx :url="selectedFileContent" />
+          </template>
+          <template v-else>
+            <pre class="file-content">{{ selectedFileContent }}</pre>
+          </template>
+        </div>
       </div>
       <div v-else class="empty-tip">请选择一个文件进行预览</div>
     </a-layout-content>
@@ -38,6 +48,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { FolderOutlined, FileOutlined } from '@ant-design/icons-vue';
+  import VueOfficeDocx from '@vue-office/docx'; // Import VueOfficeDocx
 
   console.log('index.vue');
 
@@ -47,6 +58,9 @@
   const selectedKeys = ref([]);
   const selectedFileContent = ref('');
   const selectedFileName = ref('');
+  const isImageFile = ref(false);
+  const isDocxFile = ref(false); // Add state for docx file detection
+  const isLoading = ref(false); // Add loading state
 
   // 转换文件结构为树形数据
   async function createTreeEntry(handle, path = '') {
@@ -60,7 +74,15 @@
 
     if (handle.kind === 'directory') {
       try {
+        const entries = [];
         for await (const [name, entry] of handle.entries()) {
+          entries.push([name, entry]);
+        }
+
+        // Sort entries alphabetically by name
+        entries.sort(([nameA], [nameB]) => nameA.localeCompare(nameB));
+
+        for (const [, entry] of entries) {
           const childNode = await createTreeEntry(entry, node.key + '/');
           node.children.push(childNode);
         }
@@ -76,7 +98,15 @@
   async function readDirectory(dirHandle) {
     const tree = [];
     try {
+      const entries = [];
       for await (const [name, entry] of dirHandle.entries()) {
+        entries.push([name, entry]);
+      }
+
+      // Sort entries alphabetically by name
+      entries.sort(([nameA], [nameB]) => nameA.localeCompare(nameB));
+
+      for (const [, entry] of entries) {
         const node = await createTreeEntry(entry);
         tree.push(node);
       }
@@ -89,19 +119,20 @@
   // 选择文件夹
   async function selectDirectory() {
     try {
-      // 清空当前状态
-      fileTree.value = [];
-      expandedKeys.value = [];
+      isLoading.value = true; // Start loading
+      const dirHandle = await window.showDirectoryPicker();
+      const tree = await readDirectory(dirHandle);
+
+      // Clear and update state only after successful selection
+      fileTree.value = tree;
+      expandedKeys.value = tree.map((node) => node.key); // Expand all nodes
       selectedKeys.value = [];
       selectedFileContent.value = '';
       selectedFileName.value = '';
-
-      const dirHandle = await window.showDirectoryPicker();
-      const tree = await readDirectory(dirHandle);
-      fileTree.value = tree;
-      expandedKeys.value = tree.map((node) => node.key); // Expand all nodes
     } catch (error) {
       console.log('用户取消选择');
+    } finally {
+      isLoading.value = false; // Stop loading
     }
   }
 
@@ -126,8 +157,23 @@
     if (node && !node.isDir) {
       selectedKeys.value = [key];
       selectedFileName.value = node.title;
+
       const file = await node.handle.getFile();
-      selectedFileContent.value = await file.text();
+      const fileType = file.type;
+
+      if (fileType.startsWith('image/')) {
+        isImageFile.value = true;
+        isDocxFile.value = false;
+        selectedFileContent.value = URL.createObjectURL(file);
+      } else if (file.name.endsWith('.docx')) {
+        isDocxFile.value = true;
+        isImageFile.value = false;
+        selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeDocx
+      } else {
+        isImageFile.value = false;
+        isDocxFile.value = false;
+        selectedFileContent.value = await file.text();
+      }
     }
   }
 
@@ -183,6 +229,8 @@
     color: #d4d4d4;
     border-radius: 4px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Ensure file name is at the top */
   }
 
   .preview-toolbar {
@@ -195,6 +243,13 @@
     color: #fff;
   }
 
+  .preview-content {
+    flex: 1; /* Take remaining space for content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .file-content {
     padding: 16px;
     margin: 0;
@@ -202,6 +257,13 @@
     font-size: 12px;
     line-height: 1.5;
     white-space: pre-wrap;
+  }
+
+  .image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
   }
 
   .empty-tip {
