@@ -5,7 +5,7 @@
     </template>
 
     <template v-for="item in items" :key="item">
-      <CardGrid class="!md:w-1/3 !w-full" @click="linkProject(item)">
+      <CardGrid class="!md:w-1/3 !w-full cursor-pointer" @click="linkProject(item)">
         <span class="flex">
           <Icon :icon="item.icon" :color="item.color" size="30" />
           <span class="text-lg ml-4">{{ item.title }}</span>
