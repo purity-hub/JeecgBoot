@@ -5,6 +5,8 @@ interface GroupItem {
   desc: string;
   date: string;
   group: string;
+  isExternalLink?: boolean; // 新增字段，表示是否是外部链接
+  url?: string; // 新增字段，表示链接的URL
 }
 
 interface NavItem {
@@ -112,6 +114,8 @@ export const groupItems: GroupItem[] = [
     desc: '不要等待机会，而要创造机会。',
     group: '开源组',
     date: '2021-04-01',
+    isExternalLink: true,
+    url: 'https://github.com/purity-hub',
   },
   {
     title: 'LeetCode',
@@ -136,6 +140,8 @@ export const groupItems: GroupItem[] = [
     desc: '热情和欲望可以突破一切难关。',
     group: 'UI',
     date: '2021-04-01',
+    isExternalLink: false,
+    url: '/dashboard/workbench/projectMore/fileManagement',
   },
   {
     title: 'React',

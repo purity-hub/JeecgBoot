@@ -5,12 +5,12 @@
     </template>
 
     <template v-for="item in items" :key="item">
-      <CardGrid class="!md:w-1/3 !w-full">
+      <CardGrid class="!md:w-1/3 !w-full" @click="linkProject(item)">
         <span class="flex">
           <Icon :icon="item.icon" :color="item.color" size="30" />
           <span class="text-lg ml-4">{{ item.title }}</span>
         </span>
-        <div class="flex mt-2 h-10 text-secondary"> {{ item.desc }} </div>
+        <div class="flex mt-2 h-10 text-secondary"> {{ item.desc }}</div>
         <div class="flex justify-between text-secondary">
           <span>{{ item.group }}</span>
           <span>{{ item.date }}</span>
@@ -33,7 +33,16 @@
       const more = () => {
         router.push('/dashboard/workbench/projectMore');
       };
-      return { items: groupItems, more };
+      const linkProject = (item) => {
+        if (item.isExternalLink) {
+          // 外链
+          window.open(item.url);
+        } else {
+          // 内链
+          router.push(item.url);
+        }
+      };
+      return { items: groupItems, more, linkProject };
     },
   });
 </script>
