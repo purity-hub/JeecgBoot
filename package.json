@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"@vue-office/docx": "^1.6.3",
+		"@vue-office/excel": "^1.7.14",
+		"vue-demi": "^0.14.10"
+	}
+}
