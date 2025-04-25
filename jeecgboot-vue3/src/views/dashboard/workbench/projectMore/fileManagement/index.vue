@@ -38,7 +38,7 @@
           </template>
           <template v-else-if="isPdfFile">
             <!-- Use iframe for .pdf file preview -->
-            <iframe :src="selectedFileContent" width="100%" height="100%" style="border: none;"></iframe>
+            <iframe :src="selectedFileContent" width="100%" height="100%" style="border: none"></iframe>
           </template>
           <template v-else-if="isExcelFile">
             <!-- Use VueOfficeExcel for .xlsx file preview -->
@@ -62,10 +62,17 @@
 
   console.log('index.vue');
 
+  // 在 script setup 之前添加以下代码
+  declare global {
+    interface Window {
+      showDirectoryPicker: () => Promise<FileSystemDirectoryHandle>;
+    }
+  }
+
   // 状态管理
   const fileTree = ref([]);
-  const expandedKeys = ref([]);
-  const selectedKeys = ref([]);
+  const expandedKeys: any = ref([]);
+  const selectedKeys: any = ref([]);
   const selectedFileContent = ref('');
   const selectedFileName = ref('');
   const isImageFile = ref(false);
@@ -80,13 +87,13 @@
       title: handle.name,
       key: path + handle.name,
       isDir: handle.kind === 'directory',
-      children: [],
+      children: [] as any[],
       handle: handle,
     };
 
     if (handle.kind === 'directory') {
       try {
-        const entries = [];
+        const entries: [string, FileSystemFileHandle][] = [];
         for await (const [name, entry] of handle.entries()) {
           entries.push([name, entry]);
         }
@@ -108,9 +115,9 @@
 
   // 读取整个目录结构
   async function readDirectory(dirHandle) {
-    const tree = [];
+    const tree: any = [];
     try {
-      const entries = [];
+      const entries: [string, FileSystemFileHandle][] = [];
       for await (const [name, entry] of dirHandle.entries()) {
         entries.push([name, entry]);
       }
@@ -137,7 +144,7 @@
 
       // Clear and update state only after successful selection
       fileTree.value = tree;
-      expandedKeys.value = tree.map((node) => node.key); // Expand all nodes
+      expandedKeys.value = tree.map((node: any) => node.key); // Expand all nodes
       selectedKeys.value = [];
       selectedFileContent.value = '';
       selectedFileName.value = '';
@@ -155,7 +162,7 @@
 
   // 处理文件选择
   async function handleSelect([key]) {
-    const findNode = (nodes) => {
+    const findNode = (nodes: any[]) => {
       for (const node of nodes) {
         if (node.key === key) return node;
         if (node.children) {
