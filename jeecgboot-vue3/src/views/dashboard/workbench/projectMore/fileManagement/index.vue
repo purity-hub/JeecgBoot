@@ -33,7 +33,8 @@
             <img :src="selectedFileContent" alt="Image Preview" class="image-preview" />
           </template>
           <template v-else-if="isDocxFile">
-            <VueOfficeDocx :url="selectedFileContent" />
+            <!-- Use VueOfficeDocx for .docx file preview -->
+            <VueOfficeDocx :src="selectedFileContent" />
           </template>
           <template v-else>
             <pre class="file-content">{{ selectedFileContent }}</pre>
@@ -247,7 +248,9 @@
     flex: 1; /* Take remaining space for content */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align content to the top */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 16px; /* Add padding for better readability */
   }
 
   .file-content {
