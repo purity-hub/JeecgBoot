@@ -124,6 +124,8 @@ export const groupItems: GroupItem[] = [
     desc: '现在的你决定将来的你。',
     group: '算法组',
     date: '2021-04-01',
+    isExternalLink: true,
+    url: 'https://leetcode.cn/',
   },
   {
     title: '八股文',

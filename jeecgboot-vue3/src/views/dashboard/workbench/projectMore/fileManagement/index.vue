@@ -177,39 +177,42 @@
       selectedKeys.value = [key];
       selectedFileName.value = node.title;
 
-      const file = await node.handle.getFile();
-      const fileType = file.type;
+      // 只在需要时加载文件内容
+      if (!selectedFileContent.value || selectedFileContent.value !== node.key) {
+        const file = await node.handle.getFile();
+        const fileType = file.type;
 
-      if (fileType.startsWith('image/')) {
-        isImageFile.value = true;
-        isDocxFile.value = false;
-        isPdfFile.value = false;
-        isExcelFile.value = false;
-        selectedFileContent.value = URL.createObjectURL(file);
-      } else if (file.name.endsWith('.docx')) {
-        isDocxFile.value = true;
-        isImageFile.value = false;
-        isPdfFile.value = false;
-        isExcelFile.value = false;
-        selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeDocx
-      } else if (file.name.endsWith('.pdf')) {
-        isPdfFile.value = true;
-        isImageFile.value = false;
-        isDocxFile.value = false;
-        isExcelFile.value = false;
-        selectedFileContent.value = URL.createObjectURL(file); // Use URL for PDF
-      } else if (file.name.endsWith('.xlsx')) {
-        isExcelFile.value = true;
-        isImageFile.value = false;
-        isDocxFile.value = false;
-        isPdfFile.value = false;
-        selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeExcel
-      } else {
-        isImageFile.value = false;
-        isDocxFile.value = false;
-        isPdfFile.value = false;
-        isExcelFile.value = false;
-        selectedFileContent.value = await file.text();
+        if (fileType.startsWith('image/')) {
+          isImageFile.value = true;
+          isDocxFile.value = false;
+          isPdfFile.value = false;
+          isExcelFile.value = false;
+          selectedFileContent.value = URL.createObjectURL(file);
+        } else if (file.name.endsWith('.docx')) {
+          isDocxFile.value = true;
+          isImageFile.value = false;
+          isPdfFile.value = false;
+          isExcelFile.value = false;
+          selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeDocx
+        } else if (file.name.endsWith('.pdf')) {
+          isPdfFile.value = true;
+          isImageFile.value = false;
+          isDocxFile.value = false;
+          isExcelFile.value = false;
+          selectedFileContent.value = URL.createObjectURL(file); // Use URL for PDF
+        } else if (file.name.endsWith('.xlsx')) {
+          isExcelFile.value = true;
+          isImageFile.value = false;
+          isDocxFile.value = false;
+          isPdfFile.value = false;
+          selectedFileContent.value = URL.createObjectURL(file); // Use URL for VueOfficeExcel
+        } else {
+          isImageFile.value = false;
+          isDocxFile.value = false;
+          isPdfFile.value = false;
+          isExcelFile.value = false;
+          selectedFileContent.value = await file.text();
+        }
       }
     }
   }
@@ -293,9 +296,11 @@
     padding: 16px;
     margin: 0;
     font-family: Monaco, monospace;
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 14px; /* 增大字体大小 */
+    line-height: 1.6; /* 增加行高 */
     white-space: pre-wrap;
+    color: #d4d4d4; /* 设置文字颜色 */
+    background-color: #1e1e1e; /* 设置背景颜色 */
   }
 
   .image-preview {
