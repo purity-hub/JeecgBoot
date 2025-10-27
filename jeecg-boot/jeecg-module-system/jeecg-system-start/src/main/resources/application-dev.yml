@@ -1,6 +1,7 @@
 server:
   port: 8080
   undertow:
+    decode-url: true # 启用URL解码
     # max-http-post-size: 10MB # 平替 tomcat server.tomcat.max-swallow-siz， undertow该值默认为-1
     worker-threads: 16  # 4核CPU标准配置
     buffers:
@@ -49,7 +50,8 @@ spring:
   ## quartz定时任务,采用数据库方式
   quartz:
     job-store-type: jdbc
-    initialize-schema: embedded
+    jdbc:
+      initialize-schema: embedded
     #定时任务启动开关，true-开  false-关
     auto-startup: true
     #延迟1秒启动定时任务
@@ -145,7 +147,7 @@ spring:
           selectWhereAlwayTrueCheck: false
         # 打开mergeSql功能；慢SQL记录
         stat:
-          merge-sql: true
+          merge-sql: false
           slow-sql-millis: 5000
       datasource:
         master:
@@ -253,7 +255,7 @@ jeecg:
   #大屏报表参数设置
   jmreport:
     #多租户模式，默认值为空(created:按照创建人隔离、tenant:按照租户隔离) (v1.6.2+ 新增)
-    saasMode: 
+    saasMode:
     # 平台上线安全配置(v1.6.2+ 新增)
     firewall:
       # 数据源安全 (开启后，不允许使用平台数据源、SQL解析加签并且不允许查询数据库)
@@ -290,6 +292,7 @@ logging:
   level:
     org.flywaydb: debug
     org.jeecg.modules.system.mapper: info
+#swagger
 knife4j:
   #开启增强配置
   enable: true

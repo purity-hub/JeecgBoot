@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -70,7 +70,7 @@ public class LoginController {
 
 	private final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
 
-	@Operation(summary = "登录接口")
+	@Operation(summary="登录接口")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Result<JSONObject> login(@RequestBody SysLoginModel sysLoginModel, HttpServletRequest request){
 		Result<JSONObject> result = new Result<JSONObject>();
@@ -370,7 +370,16 @@ public class LoginController {
 				} else if(CommonConstant.SMS_TPL_TYPE_2.equals(smsmode)) {
 					//忘记密码模板
 					b = DySmsHelper.sendSms(mobile, obj, DySmsEnum.FORGET_PASSWORD_TEMPLATE_CODE);
-				}
+                    //update-begin---author:wangshuai---date:2025-07-15---for:【issues/8567】严重：修改密码存在水平越权问题。---
+                    if(b){
+                        String username = sysUser.getUsername();
+                        obj.put("username",username);
+                        redisUtil.set(redisKey, obj.toJSONString(), 600);
+                        result.setSuccess(true);
+                        return result;
+                    }
+                    //update-end---author:wangshuai---date:2025-07-15---for:【issues/8567】严重：修改密码存在水平越权问题。---
+                }
 			}
 
 			if (b == false) {
@@ -404,7 +413,7 @@ public class LoginController {
 	 * @param jsonObject
 	 * @return
 	 */
-	@Operation(summary = "手机号登录接口")
+	@Operation(summary="手机号登录接口")
 	@PostMapping("/phoneLogin")
 	public Result<JSONObject> phoneLogin(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
 		Result<JSONObject> result = new Result<JSONObject>();
@@ -438,7 +447,7 @@ public class LoginController {
 		userInfo(sysUser, result, request);
 		//添加日志
 		baseCommonService.addLog("用户名: " + sysUser.getUsername() + ",登录成功！", CommonConstant.LOG_TYPE_1, null);
-
+        redisUtil.removeAll(redisKey);
 		return result;
 	}
 
@@ -523,7 +532,7 @@ public class LoginController {
 	 * @param response
 	 * @param key
 	 */
-	@Operation(summary = "获取验证码")
+	@Operation(summary="获取验证码")
 	@GetMapping(value = "/randomImage/{key}")
 	public Result<String> randomImage(HttpServletResponse response,@PathVariable("key") String key){
 		Result<String> res = new Result<String>();
@@ -793,7 +802,10 @@ public class LoginController {
 				return result;
 			}
 			//验证码5分钟内有效
-			redisUtil.set(redisKey, captcha, 300);
+            //update-begin---author:wangshuai---date:2025-07-15---for:【issues/8567】严重：修改密码存在水平越权问题。---
+            obj.put("username",username);
+            redisUtil.set(redisKey, obj.toJSONString(), 300);
+            //update-end---author:wangshuai---date:2025-07-15---for:【issues/8567】严重：修改密码存在水平越权问题。---
 			result.setSuccess(true);
 		} catch (ClientException e) {
 			e.printStackTrace();

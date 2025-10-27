@@ -11,6 +11,7 @@
           :allDefaultValues="defaultValueRef"
           :formModel="formModel"
           :formName="getBindValue.name"
+          :source="getBindValue.source"
           :setFormModel="setFormModel"
           :validateFields="validateFields"
           :clearValidate="clearValidate"
@@ -126,7 +127,15 @@
         };
       });
 
-      const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) } as Recordable));
+      const getBindValue = computed(() => {
+        const bindValue = { ...attrs, ...props, ...unref(getProps) } as Recordable;
+        // update-begin--author:liaozhiyang---date:20250630---for：【issues/8484】分类字典中的新增弹窗的label点击会触发查询区域的input
+        if (bindValue.name === undefined && bindValue.source === 'table-query') {
+          bindValue.name = 'top-query-form';
+        }
+        // update-end--author:liaozhiyang---date:20250630---for：【issues/8484】分类字典中的新增弹窗的label点击会触发查询区域的input
+        return bindValue;
+      });
 
       const getSchema = computed((): FormSchema[] => {
         const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
@@ -302,6 +311,22 @@
         }
       }
 
+      /**
+       * 获取 componentProps，处理可能是函数的情况
+       * @param schema
+       */
+      function getSchemaComponentProps(schema: FormSchema) {
+        if (typeof schema.componentProps === 'function') {
+          return schema.componentProps({
+            schema,
+            tableAction: props.tableAction,
+            formActionType,
+            formModel,
+          })
+        }
+        return schema.componentProps
+      }
+
       const formActionType: Partial<FormActionType> = {
         getFieldsValue,
         setFieldsValue,
@@ -318,6 +343,7 @@
         validate,
         submit: handleSubmit,
         scrollToField: scrollToField,
+        getSchemaComponentProps,
       };
 
       onMounted(() => {
@@ -367,6 +393,13 @@
         margin-bottom: 24px;
       }
       // update-end--author:liaozhiyang---date:20240620---for：【TV360X-1420】校验时闪动
+
+      // 表单组件中间件样式
+      .j-form-item-middleware {
+        flex: 1;
+        width: 100%
+      }
+
       &.suffix-item {
         .ant-form-item-children {
           display: flex;
@@ -374,6 +407,12 @@
 
         .ant-form-item-control {
           margin-top: 4px;
+        }
+
+        // 【QQYUN-12876】当紧凑型 suffix 时，表单组件中间件的宽度不占满
+        &.suffix-compact .j-form-item-middleware {
+          flex: unset;
+          width: auto;
         }
 
         .suffix {

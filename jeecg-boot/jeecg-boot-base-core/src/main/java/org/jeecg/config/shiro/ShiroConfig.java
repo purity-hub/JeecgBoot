@@ -109,7 +109,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/sys/getLoginQrcode/**", "anon"); //登录二维码
         filterChainDefinitionMap.put("/sys/getQrcodeToken/**", "anon"); //监听扫码
         filterChainDefinitionMap.put("/sys/checkAuth", "anon"); //授权接口排除
-
+        filterChainDefinitionMap.put("/openapi/call/**", "anon"); // 开放平台接口排除
 
         //update-begin--Author:scott Date:20221116 for：排除静态资源后缀
         filterChainDefinitionMap.put("/", "anon");
@@ -153,7 +153,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/drag/share/view/**", "anon");
         filterChainDefinitionMap.put("/drag/onlDragDatasetHead/getAllChartData", "anon");
         filterChainDefinitionMap.put("/drag/onlDragDatasetHead/getTotalData", "anon");
+        filterChainDefinitionMap.put("/drag/onlDragDatasetHead/getMapDataByCode", "anon");
+        filterChainDefinitionMap.put("/drag/onlDragDatasetHead/getTotalDataByCompId", "anon");
         filterChainDefinitionMap.put("/drag/mock/json/**", "anon");
+        filterChainDefinitionMap.put("/drag/onlDragDatasetHead/getDictByCodes", "anon");
+
         filterChainDefinitionMap.put("/jimubi/view", "anon");
         filterChainDefinitionMap.put("/jimubi/share/view/**", "anon");
 
@@ -169,7 +173,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/websocket/**", "anon");//系统通知和公告
         filterChainDefinitionMap.put("/newsWebsocket/**", "anon");//CMS模块
         filterChainDefinitionMap.put("/vxeSocket/**", "anon");//JVxeTable无痕刷新示例
-
+        //App vue3版本查询版本接口
+        filterChainDefinitionMap.put("/sys/version/app3version", "anon");
+        //仪表盘（按钮通信）
+        filterChainDefinitionMap.put("/dragChannelSocket/**","anon");
+        
         //性能监控——安全隐患泄露TOEKN（durid连接池也有）
         //filterChainDefinitionMap.put("/actuator/**", "anon");
         //测试模块排除
@@ -179,9 +187,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/error", "anon");
         // 企业微信证书排除
         filterChainDefinitionMap.put("/WW_verify*", "anon");
-
-        filterChainDefinitionMap.put("/openapi/call/**", "anon");
-
+        
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
         //如果cloudServer为空 则说明是单体 需要加载跨域配置【微服务跨域切换】
@@ -221,6 +227,7 @@ public class ShiroConfig {
         registration.addUrlPatterns("/airag/flow/debug");
         registration.addUrlPatterns("/airag/chat/send");
         registration.addUrlPatterns("/airag/app/debug");
+        registration.addUrlPatterns("/airag/app/prompt/generate");
         //支持异步
         registration.setAsyncSupported(true);
         registration.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ASYNC);
@@ -320,7 +327,7 @@ public class ShiroConfig {
 
             return sentinelManager;
         }
-
+        
         // redis 单机支持，在集群为空，或者集群无机器时候使用 add by jzyadmin@163.com
         if (lettuceConnectionFactory.getClusterConfiguration() == null || lettuceConnectionFactory.getClusterConfiguration().getClusterNodes().isEmpty()) {
             RedisManager redisManager = new RedisManager();
