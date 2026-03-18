@@ -7,6 +7,7 @@ import OpenAi from './icon/OpenAi.png';
 import qianfan from './icon/qianfan.png';
 import qianwen from './icon/qianwen.png';
 import zhipuai from './icon/zhipuai.png';
+import volcengine from './icon/volcengine.svg';
 import { ref } from 'vue';
 
 /**
@@ -67,7 +68,8 @@ export const formSchema: FormSchema[] = [
     component: 'InputPassword',
     ifShow: ({ values }) => {
       if(values.provider==='DEEPSEEK' || values.provider==="OLLAMA" || values.provider==="OPENAI"
-        || values.provider==="ZHIPU" || values.provider==="QWEN" || values.provider==="ANTHROPIC"){
+        || values.provider==="ZHIPU" || values.provider==="QWEN" || values.provider==="ANTHROPIC"
+        || values.provider==="VOLCENGINE"){
         return false;
       }
       return true;
@@ -93,5 +95,6 @@ export const imageList = ref<any>({
   OPENAI: OpenAi,
   QIANFAN: qianfan,
   QWEN: qianwen,
+  VOLCENGINE: volcengine,
   ZHIPU: zhipuai,
 });

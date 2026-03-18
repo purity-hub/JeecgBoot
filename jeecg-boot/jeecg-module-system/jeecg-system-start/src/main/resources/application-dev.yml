@@ -191,9 +191,9 @@ jeecg:
   # AI集成
   ai-chat:
     enabled: true
-#    model: deepseek-chat
-    apiKey: sk-QqWEcH3WYuD0QfyyA66520438e854eA3922e4b283d825b89
-    apiHost: https://free.v36.cm
+    model: doubao-pro-128k/ep-m-20260316172426-27bhh
+    apiKey: ff9a73a4-351e-4f65-a66f-67ef37b48b37
+    apiHost: https://ark.cn-beijing.volces.com/api/v3/
     timeout: 60
   # AIRag向量库
   ai-rag:
