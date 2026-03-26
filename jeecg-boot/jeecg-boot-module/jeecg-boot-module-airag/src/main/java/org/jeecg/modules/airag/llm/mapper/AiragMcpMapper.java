@@ -1,5 +1,6 @@
 package org.jeecg.modules.airag.llm.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.jeecg.modules.airag.llm.entity.AiragMcp;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Date:   2025-10-20
  * @Version: V1.0
  */
+@Mapper
 public interface AiragMcpMapper extends BaseMapper<AiragMcp> {
 
 }

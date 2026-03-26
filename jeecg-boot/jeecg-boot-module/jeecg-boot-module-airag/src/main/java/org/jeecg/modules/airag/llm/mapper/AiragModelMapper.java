@@ -3,6 +3,7 @@ package org.jeecg.modules.airag.llm.mapper;
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.jeecg.modules.airag.llm.entity.AiragModel;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Description: AiRag模型配置
@@ -10,6 +11,7 @@ import org.jeecg.modules.airag.llm.entity.AiragModel;
  * @Date:   2025-02-14
  * @Version: V1.0
  */
+@Mapper
 public interface AiragModelMapper extends BaseMapper<AiragModel> {
 
     /**
