@@ -30,7 +30,6 @@ import org.jeecg.common.util.AssertUtils;
 import org.xml.sax.ContentHandler;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -72,26 +71,25 @@ public class TikaDocumentParser {
 
     public Document parse(File file) {
         AssertUtils.assertNotEmpty("请选择文件", file);
-        try {
-            // 用于解析
-            InputStream isForParsing = Files.newInputStream(file.toPath());
-            // 使用 Tika 自动检测 MIME 类型
-            String fileName = file.getName().toLowerCase();
-            //后缀
-            String ext = FilenameUtils.getExtension(fileName);
-            if (fileName.endsWith(".txt")
-                    || fileName.endsWith(".md")
-                    || fileName.endsWith(".pdf")) {
+        // 使用 Tika 自动检测 MIME 类型
+        String fileName = file.getName().toLowerCase();
+        //后缀
+        String ext = FilenameUtils.getExtension(fileName);
+        if (fileName.endsWith(".txt")
+                || fileName.endsWith(".md")
+                || fileName.endsWith(".pdf")) {
+            // 用于解析(使用FileInputStream避免file.toPath()在Linux非UTF-8环境下中文文件名报错)
+            try (InputStream isForParsing = new FileInputStream(file)) {
                 return extractByTika(isForParsing);
-            //update-begin---author:wangshuai---date:2026-01-09---for:【QQYUN-14261】【AI】AI助手，支持多模态能力- 文档---
-            } else if (FILE_SUFFIX.contains(ext.toLowerCase())) {
-                return parseDocExcelPdfUsingApachePoi(file);
-            //update-end---author:wangshuai---date:2026-01-09---for:【QQYUN-14261】【AI】AI助手，支持多模态能力- 文档---
-            } else {
-                throw new IllegalArgumentException("不支持的文件格式: " + FilenameUtils.getExtension(fileName));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        //update-begin---author:wangshuai---date:2026-01-09---for:【QQYUN-14261】【AI】AI助手，支持多模态能力- 文档---
+        } else if (FILE_SUFFIX.contains(ext.toLowerCase())) {
+            return parseDocExcelPdfUsingApachePoi(file);
+        //update-end---author:wangshuai---date:2026-01-09---for:【QQYUN-14261】【AI】AI助手，支持多模态能力- 文档---
+        } else {
+            throw new IllegalArgumentException("不支持的文件格式: " + FilenameUtils.getExtension(fileName));
         }
     }
 
@@ -102,7 +100,7 @@ public class TikaDocumentParser {
      */
     public Document parseDocExcelPdfUsingApachePoi(File file) {
         AssertUtils.assertNotEmpty("请选择文件", file);
-        try (InputStream inputStream = Files.newInputStream(file.toPath())) {
+        try (InputStream inputStream = new FileInputStream(file)) {
             ApachePoiDocumentParser parser = new ApachePoiDocumentParser();
             Document document = parser.parse(inputStream);
             if (document == null || Utils.isNullOrBlank(document.text())) {

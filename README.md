@@ -1,18 +1,25 @@
-中文 | [English](./README.en-US.md)
+中文 | [English](./README.en-US.md) | [日本語](./README.ja-JP.md)
 
 JeecgBoot AI低代码平台
 ===============
 
-当前最新版本： 3.9.1（发布日期：2026-01-28） 
+🚀 **低代码迈入 v2.0 时代，一句自然语言即可生成整个系统**
+
+当前最新版本： 3.9.2（2026-04-30） 
 
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/jeecgboot/JeecgBoot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-北京国炬软件-orange.svg)](https://jeecg.com)
-[![](https://img.shields.io/badge/blog-技术博客-orange.svg)](https://jeecg.blog.csdn.net)
-[![](https://img.shields.io/badge/version-3.9.1-brightgreen.svg)](https://github.com/jeecgboot/JeecgBoot)
+[![](https://img.shields.io/badge/blog-技术博客-orange.svg)](https://www.toutiao.com/c/user/token/CiZtC9Gn_yl2qDcTF9Kqhh9LV7tW1cJsdRn2rfFUU5lZy4RJaD4hdBpJCjwAAAAAAAAAAAAAUFvsvy4j57fg5tqwVmxukKxGEhbMl7pE14lY9_YSDq-A26V7xrG3hYuq_Z9y6F3W01oQkIKQDhjDxYPqBCIBA2iiHh0=)
+[![](https://img.shields.io/badge/version-3.9.2-brightgreen.svg)](https://github.com/jeecgboot/JeecgBoot)
 [![GitHub stars](https://img.shields.io/github/stars/zhangdaiscott/jeecg-boot.svg?style=social&label=Stars)](https://github.com/jeecgboot/JeecgBoot)
 [![GitHub forks](https://img.shields.io/github/forks/zhangdaiscott/jeecg-boot.svg?style=social&label=Fork)](https://github.com/jeecgboot/JeecgBoot)
+[![Skills](https://img.shields.io/badge/AI%20Skills-自然语言编程-ff4d4f.svg)](https://jeecg.com/skills)
 
+
+> 🔥 **AI Skills 自然语言编程全新发布** — 一句话生成完整代码、一句话画流程、一句话设计表单、一句话出报表与大屏，覆盖 JeecgBoot 低代码全场景。
+>
+> ⚡ [一键安装](https://help.jeecg.com/java/ai/skills/skill-install) ｜ 📦 [Skills 开源仓库](https://github.com/jeecgboot/skills) ｜ 🌐 [Skills 官网](https://jeecg.com/skills) ｜ 📺 [实战视频](https://www.bilibili.com/video/BV1KKwTzJEbX/)
 
 
 项目介绍
@@ -20,24 +27,47 @@ JeecgBoot AI低代码平台
 
 <h3 align="center">企业级AI低代码平台</h3>
 
-JeecgBoot 新一代企业级AI智能体与低代码平台结合的`AI低代码平台`，助力企业快速实现低代码开发和构建AI应用。平台支持MCP和插件扩展，提供聊天式业务操作(如“一句话创建用户”)，大幅提升开发效率与用户便捷性。 
-
-前后端分离架构（Ant Design&Vue3，SpringBoot3，SpringCloud Alibaba，Mybatis-plus），强大代码生成器实现前后端一键生成，无需手写代码。 
-平台引领AI低代码开发模式：AI生成→在线编码→代码生成→手工合并，解决Java项目80%重复工作，提升效率，节省成本，兼顾灵活性。 
-具备强大且颗粒化的权限控制，支持按钮权限和数据权限设置，满足大型业务系统需求。功能涵盖在线表单、表单设计、流程设计、门户设计、报表与大屏设计、OA办公、AI应用、AI知识库、大模型管理、AI流程编排、AI聊天，支持ChatGPT、DeepSeek、Ollama等多种AI大模型。
-
-`AI智能报表:` JimuReport是一款自主研发的强大开源企业级Web报表工具。它通过零编码的拖拽式操作，赋能用户如同搭积木般轻松构建各类复杂报表，全面满足企业数据可视化与分析需求，助力企业级数据产品的高效打造与应用。
-
-`AI智能大屏:` JimuBI一款自主研发的强大的大屏和仪表盘设计工具。专注数字孪生与数据可视化，支持交互式大屏、仪表盘、门户和移动端，实现“一次开发，多端适配”。 大屏设计类Word风格，支持多屏切换，自由拖拽，轻松打造炫酷动态界面。
-
-`AI应用平台:` 盖AI应用管理、AI模型管理、智能对话助手、知识库问答、流程编排与设计器、AI建表、MCP插件配置等功能。平台兼容主流大模型，包括ChatGPT、DeepSeek、Ollama、智普、千问等，助力企业高效构建智能化应用，推动低代码开发与AI深度融合。
-
-`JEECG宗旨是:` JEECG旨在通过OnlineCoding平台实现简单功能的零代码快速搭建，同时针对复杂功能采用代码生成器生成代码并手工合并，打造智能且灵活的低代码开发模式，有效解决了当前低代码产品普遍缺乏灵活性的问题，提升开发效率的同时兼顾系统的扩展性和定制化能力。
-
-`JEECG业务流程:` JEECG业务流程采用BPM工作流引擎实现业务审批，扩展任务接口供开发人员编写业务逻辑，表单提供表单设计器、在线配置表单和编码表单等多种解决方案。通过流程与表单的分离设计（松耦合）及任务节点的灵活配置，既保障了企业流程的安全性与保密性，又大幅降低了开发人员的工作量。
+JeecgBoot 是一款 AI 低代码开发平台，支持 "低代码 + 零代码" 双模式。零代码模式下，5 分钟零代码快速搭建完整业务系统； 
+低代码模式下，AI 自动输出前后端代码、建表 SQL 与菜单权限，生成即可运行。 平台内置 AI 应用平台：AI 聊天助手、知识库、流程编排、MCP、插件，兼容各大模型！
+具备 Skills 能力，一句话画流程图、设计表单、甚至生成整个系统！ 
+引领AI低代码开发模式： "AI 生成 → 在线配置 → 代码生成 → 手工合并"，帮助解决 Java 项目中 80% 的重复工作，让开发更多关注业务，在大幅提升效率的同时又不失灵活性。
 
 
+---
 
+采用最新的前后端分离技术栈（Ant Design&Vue3，SpringBoot3，SpringCloud Alibaba，Mybatis-plus，具备强大且颗粒化的权限控制，支持按钮权限和数据权限设置，满足大型业务系统需求。功能涵盖在线表单、表单设计、流程设计、门户设计、报表与大屏设计、OA办公、AI应用、AI知识库、大模型管理、AI流程编排、AI聊天，支持ChatGPT、DeepSeek、Ollama等多种AI大模型。
+
+
+- `零代码能力:` 国内首个“低代码+零代码”双模驱动的AI低代码平台！同时支持低代码和零代码; 让开发者用低代码，让业务人员在同一个平台上用零代码！
+
+- `Skills能力:` 全面支持skills能力，支持一句话生成完整系统，提供零代码模式（一句话搭建系统，无需编写代码）和代码生成模式（基于 jeecg-codegen，自动生成完整代码和建表SQL）两种选择。同时支持一句话自动绘制流程图、设计表单，省去手工绘制繁琐步骤。
+
+- `AI智能报表:` JimuReport是一款自主研发的强大开源企业级Web报表工具。它通过零编码的拖拽式操作，赋能用户如同搭积木般轻松构建各类复杂报表，全面满足企业数据可视化与分析需求，助力企业级数据产品的高效打造与应用。
+
+- `AI智能大屏:` JimuBI一款自主研发的强大的大屏和仪表盘设计工具。专注数字孪生与数据可视化，支持交互式大屏、仪表盘、门户和移动端，实现“一次开发，多端适配”。 大屏设计类Word风格，支持多屏切换，自由拖拽，轻松打造炫酷动态界面。
+
+- `AI应用平台:` 盖AI应用管理、AI模型管理、智能对话助手、知识库问答、流程编排与设计器、AI建表、MCP插件配置等功能。平台兼容主流大模型，包括ChatGPT、DeepSeek、Ollama、智普、千问等，助力企业高效构建智能化应用，推动低代码开发与AI深度融合。
+
+- `JEECG宗旨是:` JEECG旨在通过OnlineCoding平台实现简单功能的零代码快速搭建，同时针对复杂功能采用代码生成器生成代码并手工合并，打造智能且灵活的低代码开发模式，有效解决了当前低代码产品普遍缺乏灵活性的问题，提升开发效率的同时兼顾系统的扩展性和定制化能力。
+
+- `JEECG业务流程:` JEECG业务流程采用BPM工作流引擎实现业务审批，扩展任务接口供开发人员编写业务逻辑，表单提供表单设计器、在线配置表单和编码表单等多种解决方案。通过流程与表单的分离设计（松耦合）及任务节点的灵活配置，既保障了企业流程的安全性与保密性，又大幅降低了开发人员的工作量。
+
+
+
+
+
+🔥 AI Skills 自然语言编程
+-----------------------------------
+
+官方提供 **一键安装 Claude Code + JEECG Skills**，使用 AI 一句话生成代码、表单、流程、报表、大屏。
+
+👉 **一键安装入口：https://help.jeecg.com/java/ai/skills/skill-install**
+
+| 资源 | 地址 |
+|------|------|
+| 📦 Skills 开源仓库 | https://github.com/jeecgboot/skills |
+| 🌐 Skills 官网 | https://jeecg.com/skills |
+| 📺 实战视频 | [自然语言编程实战](https://www.bilibili.com/video/BV1KKwTzJEbX/) |
 
 
 适用项目
@@ -65,8 +95,6 @@ JeecgBoot低代码平台兼容所有J2EE项目开发，支持信创国产化，�
 - `JeecgUniapp`  是[配套APP框架](https://github.com/jeecgboot/JeecgUniapp) 适配多个终端，支持APP、小程序、H5、鸿蒙、鸿蒙Next.
 - `jeecg-boot-starter`  是[jeecg-boot对应的底层封装starter](https://github.com/jeecgboot/jeecg-boot-starter) ：微服务启动、xxljob、分布式锁starter、rabbitmq、分布式事务、分库分表shardingsphere等.
 - 参考 [文档](https://help.jeecg.com/ui/2dev/mini) 可以删除不需要的demo，制作一个精简版本
-
-
 
 
 
@@ -557,3 +585,23 @@ git config --global http.proxy http://127.0.0.1:7890
 如果觉得还不错，请作者喝杯咖啡吧 ☺
 
 ![](https://static.oschina.net/uploads/img/201903/08155608_0EFX.png)
+
+
+## 免责声明
+
+JeecgBoot 基于 [Apache License 2.0](./LICENSE) 开源协议发布，在使用本软件前，请仔细阅读以下声明：
+
+1. **按"现状"提供**  
+   本软件及其相关文档按"现状"（AS IS）提供，不附带任何明示或暗示的担保，包括但不限于对适销性、特定用途适用性及非侵权性的担保。
+
+2. **使用风险自担**  
+   使用者应自行评估本软件是否满足其业务场景，并承担因下载、安装、使用、修改或二次开发本软件而产生的一切风险，包括但不限于数据丢失、业务中断、收益损失及其他任何形式的损害。
+
+3. **责任限制**  
+   在适用法律允许的最大范围内，JeecgBoot 的作者、贡献者及相关版权所有者对使用者或任何第三方因使用本软件而遭受的任何直接、间接、偶然、特殊、惩罚性或后果性损害不承担任何责任。
+
+4. **社区倡议**  
+   在遵守 Apache License 2.0 的前提下，我们真诚恳请基于本软件的衍生作品避免直接复刻、冒充 JeecgBoot 官方版本，或以与 JeecgBoot 高度相似的名称/品牌对外发布。
+
+凡下载、复制、安装或以任何方式使用本软件的行为，即视为已阅读、理解并同意上述免责声明。
+

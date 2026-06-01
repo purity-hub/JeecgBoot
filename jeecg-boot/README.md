@@ -1,12 +1,12 @@
 JeecgBoot 低代码开发平台
 ===============
 
-当前最新版本： 3.9.1（发布日期： 2026-01-22） 
+当前最新版本： 3.9.2（2026-04-30） 
 
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-北京国炬软件-orange.svg)](http://jeecg.com/aboutusIndex)
-[![](https://img.shields.io/badge/version-3.9.1-brightgreen.svg)](https://github.com/zhangdaiscott/jeecg-boot)
+[![](https://img.shields.io/badge/version-3.9.2-brightgreen.svg)](https://github.com/zhangdaiscott/jeecg-boot)
 [![GitHub stars](https://img.shields.io/github/stars/zhangdaiscott/jeecg-boot.svg?style=social&label=Stars)](https://github.com/zhangdaiscott/jeecg-boot)
 [![GitHub forks](https://img.shields.io/github/forks/zhangdaiscott/jeecg-boot.svg?style=social&label=Fork)](https://github.com/zhangdaiscott/jeecg-boot)
 
@@ -26,9 +26,46 @@ JeecgBoot 是一款基于BPM流程和代码生成的AI低代码平台，助力�
 
 `AI赋能低代码:` 提供完善成熟的AI应用平台，涵盖AI应用管理、AI模型管理、智能对话助手、知识库问答、流程编排与设计器、AI建表等多项功能。平台兼容多种主流大模型，包括ChatGPT、DeepSeek、Ollama、智普、千问等，助力企业高效构建智能化应用，推动低代码开发与AI深度融合。
 
+`AI驱动开发:` 全新推出AI驱动开发能力，支持一句话生成完整系统，提供零代码模式（一句话搭建系统，无需编写代码）和代码生成模式（基于 jeecg-codegen，自动生成完整代码和建表SQL）两种选择。同时支持一句话自动绘制流程图、设计表单，省去手工绘制繁琐步骤。[B站视频演示](https://www.bilibili.com/video/BV1KKwTzJEbX/) | [技能对比与使用说明](https://help.jeecg.com/java/ai/skills/skill-comparison/)
+
 `JEECG宗旨是:` JEECG旨在通过OnlineCoding平台实现简单功能的零代码快速搭建，同时针对复杂功能采用代码生成器生成代码并手工合并，打造智能且灵活的低代码开发模式，有效解决了当前低代码产品普遍缺乏灵活性的问题，提升开发效率的同时兼顾系统的扩展性和定制化能力。
 
 `JEECG业务流程:` JEECG业务流程采用BPM工作流引擎实现业务审批，扩展任务接口供开发人员编写业务逻辑，表单提供表单设计器、在线配置表单和编码表单等多种解决方案。通过流程与表单的分离设计（松耦合）及任务节点的灵活配置，既保障了企业流程的安全性与保密性，又大幅降低了开发人员的工作量。
+
+AI 重磅能力
+-----------------------------------
+
+JeecgBoot 全新推出 AI 驱动开发能力，**支持一句话生成完整系统**，极大简化开发流程。
+
+**两种模式，灵活选择：**
+
+| 模式 | 说明 |
+|------|------|
+| 零代码模式 | 一句话即可搭建系统，无需编写任何代码 |
+| 代码生成模式 | 基于 jeecg-codegen，自动生成完整代码和建表 SQL |
+
+**更多 AI 能力：**
+- 支持一句话自动绘制流程图，省去手工绘制繁琐步骤
+- 支持一句话自动设计表单，快速完成表单搭建
+
+**视频演示：** [B站观看视频](https://www.bilibili.com/video/BV1KKwTzJEbX/)
+
+**官方文档：** [技能对比与使用说明](https://help.jeecg.com/java/ai/skills/skill-comparison/)
+
+
+AI Skills 技能清单
+-----------------------------------
+
+结合 Claude Code 的 AI Skills 技能，JeecgBoot 实现了**自然语言驱动的低代码开发**，一句话即可完成从需求到代码/配置的全流程自动化。[详细文档](https://help.jeecg.com/java/ai/skills/skill-comparison/) | [Skills 下载](https://github.com/jeecgboot/skills)
+
+| Skill | 技能 | 功能介绍 | 是否需要写代码 |
+|-------|------|----------|---------------|
+| `jeecg-codegen` | AI一句话生成全套代码 | 自然语言需求自动转换为 JeecgBoot 全套 CRUD 代码，包括后端 Java 代码 + 前端 Vue3 代码 + 建表 SQL + 菜单权限 SQL，支持无表生成，甚至生成一套系统全代码 | 否（AI 自动生成源码） |
+| `jeecg-onlform` | AI一句话创建 Online 表单 | 自然语言需求自动转换为 JeecgBoot Online 表单，完成从表单配置 → 同步数据库 → 生成菜单 SQL 的全流程自动化 | 否 |
+| `jeecg-onlreport` | AI一句话创建 Online 报表 | 将自然语言需求自动转换为 JeecgBoot Online 报表，完成从 SQL 编写 → 字段解析 → 报表配置 → 创建报表的全流程自动化 | 否 |
+| `jeecg-desform` | AI一句话画表单 | 自然语言的表单需求描述自动转换为 JeecgBoot 的设计器表单，完成从需求解析 → JSON 生成 → API 创建的全流程自动化，甚至可以创建一套系统 | 否 |
+| `jeecg-bpmn` | AI一句话画流程 | 将自然语言的审批流程描述自动转换为 Flowable BPMN 2.0 XML，并通过 API 在 JeecgBoot 系统中自动创建流程 | 否 |
+
 
 
 适用项目
@@ -46,10 +83,10 @@ JeecgBoot低代码平台兼容所有J2EE项目开发，支持信创国产化，�
 
 #### 项目说明
 
-| 项目名                | 说明                                 | 
-|--------------------|------------------------------------|
-| `jeecg-boot`    | 后端源码JAVA（SpringBoot3微服务架构）         |
-| `jeecgboot-vue3` | 前端源码VUE3（vue3+vite6+antd4+ts最新技术栈） |
+| 项目名              | 说明                                                                 | 
+|------------------|--------------------------------------------------------------------|
+| `jeecg-boot`     | 后端源码JAVA（SpringBoot3微服务架构）                                         |
+| `jeecgboot-vue3` | 前端源码VUE3（vue3+vite6+antd4+ts最新技术栈）                                 |
 
 
 
